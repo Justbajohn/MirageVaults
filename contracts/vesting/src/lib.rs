@@ -148,3 +148,76 @@ impl Vesting {
         env.storage().instance().get(&DataKey::Duration).unwrap_or(0)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use soroban_sdk::{
+        testutils::{Address as _, Ledger, LedgerInfo},
+        Env, Address,
+    };
+
+    fn create_vesting(env: &Env) -> VestingClient {
+        let contract_id = env.register(Vesting, ());
+        let client = VestingClient::new(env, &contract_id);
+        let admin = Address::generate(env);
+        let token = Address::generate(env);
+        let beneficiary = Address::generate(env);
+
+        env.ledger().set(LedgerInfo {
+            timestamp: 1000,
+            ..env.ledger().get()
+        });
+
+        client.initialize(&admin, &token, &beneficiary, &1000i128, &100u64, &500u64);
+        client
+    }
+
+    #[test]
+    fn test_vested_amount_before_cliff_is_zero() {
+        let env = Env::default();
+        env.mock_all_auths();
+        let client = create_vesting(&env);
+        env.ledger().set(LedgerInfo {
+            timestamp: 1050,
+            ..env.ledger().get()
+        });
+        assert_eq!(client.vested_amount(), 0i128);
+    }
+
+    #[test]
+    fn test_vested_amount_after_duration_is_total() {
+        let env = Env::default();
+        env.mock_all_auths();
+        let client = create_vesting(&env);
+        env.ledger().set(LedgerInfo {
+            timestamp: 2000,
+            ..env.ledger().get()
+        });
+        assert_eq!(client.vested_amount(), 1000i128);
+    }
+
+    #[test]
+    fn test_claimable_starts_at_zero() {
+        let env = Env::default();
+        env.mock_all_auths();
+        let client = create_vesting(&env);
+        assert_eq!(client.claimable_amount(), 0i128);
+    }
+
+    #[test]
+    fn test_get_total_amount() {
+        let env = Env::default();
+        env.mock_all_auths();
+        let client = create_vesting(&env);
+        assert_eq!(client.get_total_amount(), 1000i128);
+    }
+
+    #[test]
+    fn test_get_cliff() {
+        let env = Env::default();
+        env.mock_all_auths();
+        let client = create_vesting(&env);
+        assert_eq!(client.get_cliff(), 100u64);
+    }
+}
