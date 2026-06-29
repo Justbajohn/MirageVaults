@@ -121,13 +121,13 @@ Claimed tokens are tracked separately — `claimable_amount()` always returns `v
 
 ## Testnet Transactions
 
-### Claim Flow — Vesting → Token Transfer
+### Token Mint — Admin → Vesting Contract
 
 | | |
 |---|---|
-| **Action** | Beneficiary calls `claim()` → vesting contract transfers tokens |
-| **Explorer** | [View on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CDKLKTXKFW4IQCFUXNTV4EKSDY3L2ZYRHK6O65BURNPN3WBNZKLOHYZC) |
-
+| **Transaction** | `75077ecf4922d9be1834a0de24bf53dcc187d1a7be82359bb4a4364b5fa7085c` |
+| **Explorer** | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/75077ecf4922d9be1834a0de24bf53dcc187d1a7be82359bb4a4364b5fa7085c) |
+| **Action** | Admin calls `mint()` to fund the vesting contract with 1,000,000 tokens |
 ---
 
 ## Contract API
