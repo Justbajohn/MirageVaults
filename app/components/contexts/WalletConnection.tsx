@@ -52,7 +52,7 @@ export default function WalletConnection() {
         <button
           onClick={handleConnect}
           disabled={loading || !walletsKit}
-          className={`${buttonBaseClass} border border-emerald-800/60 bg-zinc-950 hover:bg-emerald-950/80 hover:border-emerald-700/60`}
+          className={`${buttonBaseClass}  bg-emerald-950 hover:bg-emerald-950/80 hover:border-emerald-700/60`}
         >
           {loading ? (
             <div
@@ -62,7 +62,7 @@ export default function WalletConnection() {
           ) : (
             <FaWallet className="text-sm text-emerald-600" />
           )}
-          <span className="text-sm font-black tracking-widest uppercase text-emerald-600">
+          <span className="text-sm font-black tracking-widest uppercase text-white">
             {loading ? "Connecting..." : "Connect"}
           </span>
           {/* sweep shimmer */}

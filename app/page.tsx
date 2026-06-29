@@ -27,8 +27,8 @@ export default function Home() {
             Mirage <span className="text-white">Vault</span>
           </h1>
           <p className="text-zinc-500 mt-3 text-sm max-w-md">
-            On-chain token vesting on Stellar Soroban. Tokens unlock linearly
-            after the cliff — claim what's yours, whenever you're ready.
+            Onchain token vesting - Tokens unlock linearly
+            after the cliff. Claim what's yours, whenever you're ready.
           </p>
         </section>
       </div>
