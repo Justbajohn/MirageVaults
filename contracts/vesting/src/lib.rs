@@ -157,7 +157,7 @@ mod tests {
         Env, Address,
     };
 
-    fn create_vesting(env: &Env) -> VestingClient {
+    fn create_vesting(env: &Env) -> VestingClient<'_> {
         let contract_id = env.register(Vesting, ());
         let client = VestingClient::new(env, &contract_id);
         let admin = Address::generate(env);
