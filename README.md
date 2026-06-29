@@ -4,7 +4,9 @@ A token vesting dashboard built on Stellar/Soroban. Tokens vest linearly after a
 
 ## Live Demo
 
-> [https://miragevault.vercel.app](https://mirage-vault.vercel.app)
+> [https://mirage-vaults.vercel.app](https://mirage-vaults.vercel.app)
+
+> 🎥 Demo Video: [Demo Video](https://youtu.be/teJO1g3KZyE?si=kBlrAfYPcNyRsz41)
 
 ---
 
@@ -20,7 +22,7 @@ A token vesting dashboard built on Stellar/Soroban. Tokens vest linearly after a
 ![Test Output](app/screenshots/test-output.png)
 
 ### CI/CD Pipeline
-![CI](https://github.com/Justbajohn/mirage-vault/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/Justbajohn/MirageVaults/actions/workflows/ci.yml/badge.svg)
 ![CI Screenshot](app/screenshots/ci-cd.png)
 
 ---
