@@ -10,6 +10,9 @@ A token vesting dashboard built on Stellar/Soroban. Tokens vest linearly after a
 
 ## Screenshots
 
+### Mobile Responsive UI
+![Mobile Responsive View](app/screenshots/mobile-responsive.png)
+
 ### Homepage
 ![Homepage](app/screenshots/homepage.png)
 
