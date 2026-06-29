@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { stellar } from "@/app/lib/stellar";
 import { FaWallet } from "react-icons/fa";
@@ -53,27 +52,22 @@ export default function WalletConnection() {
         <button
           onClick={handleConnect}
           disabled={loading || !walletsKit}
-          className={`${buttonBaseClass} border border-[#524981]/60 bg-zinc-950 hover:bg-[#3B0A82]/80 hover:border-[#524981]`}
-          style={{ borderColor: "rgba(59,10,130,0.5)" }}
+          className={`${buttonBaseClass} border border-emerald-800/60 bg-zinc-950 hover:bg-emerald-950/80 hover:border-emerald-700/60`}
         >
           {loading ? (
             <div
-              className="h-4 w-4 animate-spin rounded-full border-2 border-r-transparent"
-              style={{ borderColor: "#7c3aed", borderRightColor: "transparent" }}
+              className="h-4 w-4 animate-spin rounded-full border-2"
+              style={{ borderColor: "#10b981", borderRightColor: "transparent" }}
             />
           ) : (
-            <FaWallet style={{ color: "#524981" }} className="text-sm" />
+            <FaWallet className="text-sm text-emerald-600" />
           )}
-          <span
-            className="text-sm font-black tracking-widest uppercase"
-            style={{ color: "#524981" }}
-          >
+          <span className="text-sm font-black tracking-widest uppercase text-emerald-600">
             {loading ? "Connecting..." : "Connect"}
           </span>
-
           {/* sweep shimmer */}
           <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-700 group-hover:[transform:skew(-12deg)_translateX(100%)]">
-            <div className="relative h-full w-8" style={{ background: "rgba(59,10,130,0.12)" }} />
+            <div className="relative h-full w-8 bg-emerald-900/20" />
           </div>
         </button>
       </div>
@@ -83,15 +77,18 @@ export default function WalletConnection() {
   return (
     <div className="relative">
       {toast && (
-        <div
-          className="absolute -top-14 right-0 px-4 py-2 rounded-lg shadow-xl text-[10px] font-black uppercase tracking-widest z-50 whitespace-nowrap bg-zinc-900 border"
-          style={{ color: "#7c3aed", borderColor: "rgba(59,10,130,0.3)" }}
-        >
+        <div className="absolute -top-14 right-0 px-4 py-2 rounded-lg shadow-xl text-[10px] font-black uppercase tracking-widest z-50 whitespace-nowrap bg-zinc-900 border border-emerald-800/30 text-emerald-400">
           {toast.message}
         </div>
       )}
-
       <div className="flex flex-row items-center justify-end gap-3">
+        {/* Address pill */}
+        <div className="hidden md:flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-500/5 border border-emerald-800/30">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="text-xs font-mono text-emerald-400">
+            {address.slice(0, 6)}...{address.slice(-4)}
+          </span>
+        </div>
         {/* Disconnect */}
         <button
           onClick={handleDisconnect}

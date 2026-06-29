@@ -83,7 +83,10 @@ export default function VestingDashboard() {
   const [now, setNow] = useState(Math.floor(Date.now() / 1000));
 
   useEffect(() => {
-    const interval = setInterval(() => setNow(Math.floor(Date.now() / 1000)), 1000);
+    const interval = setInterval(
+      () => setNow(Math.floor(Date.now() / 1000)),
+      1000
+    );
     return () => clearInterval(interval);
   }, []);
 
@@ -141,9 +144,7 @@ export default function VestingDashboard() {
         fee: "10000",
         networkPassphrase: PASSPHRASE,
       })
-        .addOperation(
-          contract.call("claim", new Address(address).toScVal())
-        )
+        .addOperation(contract.call("claim", new Address(address).toScVal()))
         .setTimeout(30)
         .build();
 
@@ -195,16 +196,38 @@ export default function VestingDashboard() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10 space-y-6">
-
       {/* Stat Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: "Total Locked", value: state ? formatTokens(state.totalAmount) : "—", icon: Lock, color: "text-zinc-400" },
-          { label: "Total Vested", value: state ? formatTokens(state.vestedAmount) : "—", icon: TrendingUp, color: "text-violet-400" },
-          { label: "Claimed", value: state ? formatTokens(state.claimedAmount) : "—", icon: Unlock, color: "text-emerald-400" },
-          { label: "Claimable Now", value: state ? formatTokens(state.claimableAmount) : "—", icon: Clock, color: "text-amber-400" },
+          {
+            label: "Total Locked",
+            value: state ? formatTokens(state.totalAmount) : "—",
+            icon: Lock,
+            color: "text-zinc-400",
+          },
+          {
+            label: "Total Vested",
+            value: state ? formatTokens(state.vestedAmount) : "—",
+            icon: TrendingUp,
+            color: "text-emerald-400",
+          },
+          {
+            label: "Claimed",
+            value: state ? formatTokens(state.claimedAmount) : "—",
+            icon: Unlock,
+            color: "text-emerald-400",
+          },
+          {
+            label: "Claimable Now",
+            value: state ? formatTokens(state.claimableAmount) : "—",
+            icon: Clock,
+            color: "text-amber-400",
+          },
         ].map(({ label, value, icon: Icon, color }) => (
-          <div key={label} className="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-4">
+          <div
+            key={label}
+            className="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-4"
+          >
             <div className="flex items-center gap-2 mb-2">
               <Icon size={14} className={color} />
               <span className="text-zinc-500 text-xs">{label}</span>
@@ -241,7 +264,7 @@ export default function VestingDashboard() {
             transition={{ duration: 0.7, ease: "easeOut" }}
           />
           <motion.div
-            className="absolute top-0 h-full bg-violet-500/60 rounded-full"
+            className="absolute top-0 h-full bg-emerald-500/60 rounded-full"
             style={{ left: `${claimedPct}%` }}
             initial={{ width: 0 }}
             animate={{ width: `${Math.max(vestedPct - claimedPct, 0)}%` }}
@@ -258,14 +281,30 @@ export default function VestingDashboard() {
         <div className="grid grid-cols-2 gap-3 pt-2">
           <div className="bg-zinc-800/50 rounded-xl p-3">
             <p className="text-zinc-500 text-xs mb-1">Cliff</p>
-            <p className={`font-bold text-sm ${pastCliff ? "text-emerald-400" : "text-amber-400"}`}>
-              {loading ? "—" : pastCliff ? "✓ Passed" : formatTimeLeft(cliffLeft)}
+            <p
+              className={`font-bold text-sm ${
+                pastCliff ? "text-emerald-400" : "text-amber-400"
+              }`}
+            >
+              {loading
+                ? "—"
+                : pastCliff
+                ? "✓ Passed"
+                : formatTimeLeft(cliffLeft)}
             </p>
           </div>
           <div className="bg-zinc-800/50 rounded-xl p-3">
             <p className="text-zinc-500 text-xs mb-1">Fully Vested In</p>
-            <p className={`font-bold text-sm ${vestLeft === 0 ? "text-emerald-400" : "text-violet-400"}`}>
-              {loading ? "—" : vestLeft === 0 ? "✓ Complete" : formatTimeLeft(vestLeft)}
+            <p
+              className={`font-bold text-sm ${
+                vestLeft === 0 ? "text-emerald-400" : "text-emerald-400"
+              }`}
+            >
+              {loading
+                ? "—"
+                : vestLeft === 0
+                ? "✓ Complete"
+                : formatTimeLeft(vestLeft)}
             </p>
           </div>
         </div>
@@ -289,7 +328,7 @@ export default function VestingDashboard() {
             <button
               onClick={handleClaim}
               disabled={claiming || !state || state.claimableAmount <= 0}
-              className="w-full py-3 rounded-xl bg-violet-600 hover:bg-violet-500
+              className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500
                 disabled:bg-zinc-800 disabled:text-zinc-600 disabled:cursor-not-allowed
                 text-white font-bold text-sm tracking-wider transition-all
                 flex items-center justify-center gap-2"
@@ -319,7 +358,7 @@ export default function VestingDashboard() {
               href={`${explorerBase}/contract/${id}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-zinc-400 hover:text-violet-400
+              className="flex items-center gap-1.5 text-zinc-400 hover:text-emerald-400
                 transition-colors text-xs font-mono"
             >
               {id.slice(0, 8)}...{id.slice(-8)}
@@ -339,11 +378,12 @@ export default function VestingDashboard() {
             className={`fixed bottom-10 left-1/2 -translate-x-1/2 w-full max-w-sm
               mx-4 p-4 rounded-2xl flex items-center justify-between gap-4
               border z-50 backdrop-blur
-              ${txStatus.type === "success"
-                ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
-                : txStatus.type === "error"
-                ? "bg-rose-500/10 border-rose-500/20 text-rose-400"
-                : "bg-violet-500/10 border-violet-500/20 text-violet-400"
+              ${
+                txStatus.type === "success"
+                  ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
+                  : txStatus.type === "error"
+                  ? "bg-rose-500/10 border-rose-500/20 text-rose-400"
+                  : "bg-emerald-500/10 border-violet-500/20 text-emerald-400"
               }`}
           >
             <div className="flex items-center gap-3 font-bold text-sm">
